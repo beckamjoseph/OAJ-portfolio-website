@@ -1,0 +1,2183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oluwaseyi Aaron Joseph | Social Media Manager & Video Creator</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- ============================================================
+  DEVELOPER NOTES
+  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  BACKEND  â†’  ../backend/server.js   (Node/Express + Nodemailer)
+  VIDEOS   â†’  ./assets/videos/       (see README.txt in that folder)
+  ENV FILE â†’  ../backend/.env        (copy from .env.example)
+
+  TO RUN LOCALLY:
+    1. cd backend && npm install && npm run dev
+    2. Open frontend/index.html with Live Server (VS Code)
+       OR serve with: npx serve frontend
+
+  SEARCH THIS FILE FOR THESE TAGS TO FIND EDITABLE SPOTS:
+    GOOGLE_DRIVE_LINK   â†’ your Google Drive portfolio link
+    VIDEO_SRC_01..04    â†’ paths/URLs to your video files
+    BACKEND_URL         â†’ your deployed API URL
+============================================================ -->
+
+  <style>
+    /* â”€â”€â”€ CSS VARIABLES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --gray-100: #f5f5f5;
+      --gray-200: #e0e0e0;
+      --gray-400: #999999;
+      --gray-600: #555555;
+      --gray-800: #1a1a1a;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* â”€â”€â”€ CUSTOM CURSOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #cursor {
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: difference;
+    }
+
+    #cursor-ring {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    /* â”€â”€â”€ NOISE OVERLAY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9997;
+      opacity: 0.4;
+    }
+
+    /* â”€â”€â”€ NAVIGATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.2em;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray-400);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    /* â”€â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .sidebar {
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .sidebar::before,
+    .sidebar::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-icon {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.4);
+      stroke-width: 1.5;
+      transition: stroke 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar-icon:hover {
+      stroke: white;
+    }
+
+    /* â”€â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gray-600);
+    }
+
+    .hero-greeting {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--gray-400);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-name span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px white;
+    }
+
+    .hero-role {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--gray-400);
+      margin-bottom: 2.5rem;
+      display: inline-block;
+      position: relative;
+    }
+
+    .hero-role::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gray-600);
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--gray-400);
+      max-width: 380px;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: white;
+      color: black;
+      padding: 0.85rem 2.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: white;
+      outline: 1px solid white;
+    }
+
+    .btn-ghost {
+      color: var(--gray-400);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    .btn-ghost:hover {
+      color: white;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-photo-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .hero-photo {
+      width: 85%;
+      max-height: 90vh;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(100%) contrast(1.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-photo-bg {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 75%;
+      background: var(--gray-800);
+      z-index: 1;
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 3rem;
+      left: 0;
+      display: flex;
+      gap: 0;
+      z-index: 10;
+    }
+
+    .stat-box {
+      padding: 1.2rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .stat-box:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: white;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    /* â”€â”€â”€ SCROLL INDICATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .scroll-line {
+      width: 60px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: white;
+      animation: scrollLine 2s ease infinite;
+    }
+
+    @keyframes scrollLine {
+      0% {
+        left: -100%
+      }
+
+      100% {
+        left: 100%
+      }
+    }
+
+    .scroll-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    /* â”€â”€â”€ FLOATING 3D SHAPES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .scene-3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .float-shape {
+      position: absolute;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      animation: floatRotate linear infinite;
+    }
+
+    .shape-1 {
+      width: 200px;
+      height: 200px;
+      top: 10%;
+      left: 5%;
+      animation-duration: 25s;
+    }
+
+    .shape-2 {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      left: 8%;
+      animation-duration: 18s;
+      border-radius: 50%;
+    }
+
+    .shape-3 {
+      width: 80px;
+      height: 80px;
+      top: 30%;
+      left: 2%;
+      animation-duration: 22s;
+      transform: rotate(45deg);
+    }
+
+    @keyframes floatRotate {
+      0% {
+        transform: translateY(0) rotate(0deg)
+      }
+
+      50% {
+        transform: translateY(-30px) rotate(180deg)
+      }
+
+      100% {
+        transform: translateY(0) rotate(360deg)
+      }
+    }
+
+    /* â”€â”€â”€ MARQUEE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .marquee-section {
+      background: white;
+      overflow: hidden;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 2rem;
+      color: black;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .marquee-dot {
+      width: 4px;
+      height: 4px;
+      background: black;
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0)
+      }
+
+      100% {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* â”€â”€â”€ ABOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #about {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      background: var(--gray-800);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-left {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-photo-container {
+      position: absolute;
+      inset: 0;
+    }
+
+    .about-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(100%) brightness(0.7);
+    }
+
+    .about-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--gray-800));
+    }
+
+    .about-photo-label {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .about-right {
+      padding: 7rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 0.9;
+      margin-bottom: 2rem;
+      color: white;
+    }
+
+    .about-intro {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--gray-400);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+    }
+
+    .about-intro strong {
+      color: white;
+      font-weight: 500;
+    }
+
+    .what-i-do {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .service-item {
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: border-color 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 0;
+      background: white;
+      transition: height 0.4s ease;
+    }
+
+    .service-item:hover::before {
+      height: 100%;
+    }
+
+    .service-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .service-icon {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .service-desc {
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--gray-400);
+    }
+
+    /* â”€â”€â”€ RESUME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #resume {
+      min-height: 100vh;
+      background: black;
+      padding: 7rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #resume .bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .resume-col h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .resume-item {
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .resume-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 6px;
+      width: 7px;
+      height: 7px;
+      background: white;
+      border-radius: 50%;
+      transition: box-shadow 0.3s;
+    }
+
+    .resume-item:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .resume-item:hover::before {
+      box-shadow: 0 0 12px white;
+    }
+
+    .resume-date {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 0.4rem;
+    }
+
+    .resume-role {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.3rem;
+    }
+
+    .resume-org {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .resume-desc {
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--gray-400);
+    }
+
+    .skills-section {
+      max-width: 1200px;
+      margin: 4rem auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .skills-section h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .skill-tag {
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      border-color: white;
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .skill-bar {
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-bar-name {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .skill-bar-pct {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+    }
+
+    .skill-bar-track {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: white;
+      width: 0;
+      transition: width 1.5s ease;
+    }
+
+    /* â”€â”€â”€ PORTFOLIO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #portfolio {
+      min-height: 100vh;
+      background: var(--gray-800);
+      padding: 8rem 4.5rem;
+      overflow: hidden;
+    }
+
+    .portfolio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .portfolio-drive-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s;
+      margin-bottom: 1rem;
+    }
+
+    .portfolio-drive-btn:hover {
+      border-color: white;
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .portfolio-drive-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .portfolio-filters {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .filter-btn {
+      background: none;
+      border: none;
+      color: var(--gray-400);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.3s;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      color: white;
+      border-bottom-color: white;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* â”€â”€â”€ PORTFOLIO CARDS + VIDEO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .portfolio-card {
+      aspect-ratio: 4/3;
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s ease, border-color 0.3s;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .card-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+      filter: grayscale(30%);
+    }
+
+    .portfolio-card:hover .card-video {
+      opacity: 1;
+    }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+      z-index: 0;
+    }
+
+    .card-pattern {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 0;
+      transition: opacity 0.4s;
+    }
+
+    .portfolio-card:hover .card-pattern {
+      opacity: 0;
+    }
+
+    .card-icon-large {
+      font-size: 4rem;
+      opacity: 0.07;
+    }
+
+    .card-play-idle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      transition: opacity 0.4s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    .card-play-idle svg {
+      width: 18px;
+      height: 18px;
+      fill: rgba(255, 255, 255, 0.5);
+      margin-left: 3px;
+    }
+
+    .portfolio-card:hover .card-play-idle {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.8rem;
+      z-index: 4;
+    }
+
+    .portfolio-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-num {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.2);
+      z-index: 5;
+      transition: opacity 0.3s;
+    }
+
+    .portfolio-card:hover .card-num {
+      opacity: 0;
+    }
+
+    .card-category {
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .card-btn {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.25s;
+    }
+
+    .card-btn-primary {
+      background: white;
+      color: black;
+    }
+
+    .card-btn-primary:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .card-btn-ghost {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-btn-ghost:hover {
+      color: white;
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .card-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: white;
+      z-index: 6;
+    }
+
+    .card-mute {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 6;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      cursor: pointer;
+    }
+
+    .card-mute svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .portfolio-card:hover .card-mute {
+      opacity: 1;
+    }
+
+    /* â”€â”€â”€ CONTACT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #contact {
+      min-height: 60vh;
+      background: white;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .contact-left {
+      background: black;
+      padding: 7rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-left .section-title {
+      color: white;
+    }
+
+    .contact-left .section-label {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .contact-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-item-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      min-width: 70px;
+      margin-top: 3px;
+    }
+
+    .contact-item-value {
+      font-size: 0.9rem;
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .contact-item-value:hover {
+      opacity: 0.6;
+    }
+
+    .contact-right {
+      background: white;
+      padding: 7rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-right .section-label {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    .contact-right .section-title {
+      color: black;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 0.8rem 0;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      color: black;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-input::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+
+    .form-input:focus {
+      border-bottom-color: black;
+    }
+
+    textarea.form-input {
+      resize: none;
+      height: 100px;
+    }
+
+    .btn-dark {
+      background: black;
+      color: white;
+      padding: 0.9rem 2.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.3s;
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-dark:hover {
+      background: var(--gray-800);
+    }
+
+    .btn-dark:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* â”€â”€â”€ FORM STATUS MESSAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    #form-status {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0;
+      display: none;
+    }
+
+    #form-status.success {
+      background: #e8f5e9;
+      color: #1b5e20;
+      border-left: 3px solid #2e7d32;
+    }
+
+    #form-status.error {
+      background: #fce4ec;
+      color: #880e4f;
+      border-left: 3px solid #c62828;
+    }
+
+    #form-status.loading {
+      background: #f5f5f5;
+      color: #333;
+      border-left: 3px solid #999;
+    }
+
+    /* â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    footer {
+      background: black;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.7rem;
+      color: var(--gray-400);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* â”€â”€â”€ REVEAL ANIMATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* â”€â”€â”€ 3D CARD TILT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    .tilt-card {
+      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    /* â”€â”€â”€ RESPONSIVE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    @media (max-width:900px) {
+      #home {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      nav {
+        padding: 1.5rem 2rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-left {
+        padding: 8rem 2rem 4rem;
+      }
+
+      #about {
+        grid-template-columns: 1fr;
+      }
+
+      .about-left {
+        display: none;
+      }
+
+      .about-right {
+        padding: 5rem 2rem;
+      }
+
+      .resume-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      #resume {
+        padding: 5rem 2rem;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #portfolio {
+        padding: 5.5rem 2rem;
+      }
+
+      #contact {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-left,
+      .contact-right {
+        padding: 4rem 2rem;
+      }
+
+      footer {
+        padding: 2rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .portfolio-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#home" class="nav-logo">OAJ</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- SIDEBAR SOCIAL ICONS -->
+  <div class="sidebar">
+    <svg class="sidebar-icon" viewBox="0 0 24 24">
+      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+    <svg class="sidebar-icon" viewBox="0 0 24 24">
+      <path
+        d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0022.7.36a9 9 0 01-2.88 1.1A4.52 4.52 0 0016.11 0c-2.5 0-4.52 2-4.52 4.52 0 .35.04.7.11 1.03A12.84 12.84 0 013 1.89a4.52 4.52 0 001.4 6.03 4.48 4.48 0 01-2.05-.57v.06c0 2.19 1.56 4.02 3.63 4.44a4.53 4.53 0 01-2.04.08 4.52 4.52 0 004.22 3.14A9.07 9.07 0 012 19.54 12.8 12.8 0 009 21.5c8.4 0 13-6.96 13-13v-.59A9.22 9.22 0 0023 5V3z" />
+    </svg>
+    <svg class="sidebar-icon" viewBox="0 0 24 24">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+    <svg class="sidebar-icon" viewBox="0 0 24 24">
+      <path
+        d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4S5.12 4 3.41 4.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z" />
+      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+    </svg>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SECTION: HERO
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section id="home">
+    <div class="scene-3d">
+      <div class="float-shape shape-1"></div>
+      <div class="float-shape shape-2"></div>
+      <div class="float-shape shape-3"></div>
+    </div>
+
+    <div class="hero-left">
+      <div class="hero-tag reveal">Creative Digital Specialist</div>
+      <p class="hero-greeting reveal" style="transition-delay:0.1s">Hi There! I'm</p>
+      <h1 class="hero-name reveal" style="transition-delay:0.2s">
+        OLUWASEYI<span>AARON</span>
+      </h1>
+      <p class="hero-role reveal" style="transition-delay:0.3s">Social Media Manager / Video Creator</p>
+      <p class="hero-desc reveal" style="transition-delay:0.4s">
+        Creative digital media specialist with a strong focus on video production, editing, and social media content
+        development â€” transforming ideas into high-quality content that drives engagement.
+      </p>
+      <div class="hero-cta reveal" style="transition-delay:0.5s">
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-ghost">Get In Touch â†’</a>
+      </div>
+
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+
+      <div class="hero-stats reveal" style="transition-delay:0.6s">
+        <div class="stat-box">
+          <span class="stat-num" data-count="3">0</span>
+          <span class="stat-label">Platforms</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="5">0</span>
+          <span class="stat-label">Tools Mastered</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" data-count="100">0</span>
+          <span class="stat-label">% Passion</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-photo-bg"></div>
+      <div class="hero-photo-wrapper">
+        <img class="hero-photo"
+          src="assets/images/profile-photo.png"
+          alt="Oluwaseyi Aaron Joseph">
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE TICKER -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <div class="marquee-item">Social Media Strategy <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Video Editing <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Short-Form Content <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Reels & TikTok <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Adobe Premiere <span class="marquee-dot"></span></div>
+      <div class="marquee-item">After Effects <span class="marquee-dot"></span></div>
+      <div class="marquee-item">DaVinci Resolve <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Social Media Strategy <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Video Editing <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Short-Form Content <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Reels & TikTok <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+      <div class="marquee-item">Adobe Premiere <span class="marquee-dot"></span></div>
+      <div class="marquee-item">After Effects <span class="marquee-dot"></span></div>
+      <div class="marquee-item">DaVinci Resolve <span class="marquee-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SECTION: ABOUT ME
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section id="about">
+    <div class="about-left">
+      <div class="about-photo-container">
+        <img class="about-photo"
+          src="assets/images/profile-photo.png"
+          alt="Oluwaseyi">
+        <div class="about-photo-overlay"></div>
+      </div>
+      <div class="about-photo-label">ABOUT</div>
+    </div>
+    <div class="about-right">
+      <p class="section-label reveal">Who I Am</p>
+      <h2 class="section-title reveal" style="transition-delay:0.1s">ABOUT<br>ME</h2>
+      <p class="about-intro reveal" style="transition-delay:0.2s">
+        I'm <strong>Oluwaseyi Aaron Joseph</strong>, a Creative Digital Media Specialist based in <strong>Abuja,
+          Nigeria</strong>. I specialize in social media content strategy, video production, and visual storytelling
+        across platforms like YouTube, TikTok, and Instagram.
+      </p>
+      <p class="about-intro reveal" style="transition-delay:0.3s">
+        Currently pursuing a <strong>BSc in Cybersecurity</strong> at Bingham University, I combine technical thinking
+        with creative execution to produce content that doesn't just look good â€” it converts.
+      </p>
+      <div class="what-i-do reveal" style="transition-delay:0.4s">
+        <div class="service-item tilt-card">
+          <div class="service-icon">&#127909;</div>
+          <div class="service-title">Video Production</div>
+          <div class="service-desc">Short-form & long-form video optimized for every platform.</div>
+        </div>
+        <div class="service-item tilt-card">
+          <div class="service-icon">&#128241;</div>
+          <div class="service-title">Social Media</div>
+          <div class="service-desc">Strategy, scheduling, and growth across digital platforms.</div>
+        </div>
+        <div class="service-item tilt-card">
+          <div class="service-icon">&#9986;&#65039;</div>
+          <div class="service-title">Post Production</div>
+          <div class="service-desc">Color grading and sound design.</div>
+        </div>
+        <div class="service-item tilt-card">
+          <div class="service-icon">&#128227;</div>
+          <div class="service-title">Brand Content</div>
+          <div class="service-desc">Marketing-aligned content that speaks to audiences.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SECTION: RESUME
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section id="resume">
+    <div class="bg-text">RESUME</div>
+    <div style="max-width:1200px;margin:0 auto 3rem;position:relative;z-index:2;">
+      <p class="section-label reveal">My Background</p>
+      <h2 class="section-title reveal" style="transition-delay:0.1s">EXPERIENCE &<br>EDUCATION</h2>
+    </div>
+    <div class="resume-grid">
+      <div class="resume-col">
+        <h3 class="reveal">Experience</h3>
+        <div class="resume-item reveal" style="transition-delay:0.1s">
+          <div class="resume-date">2025 â€” Present</div>
+          <div class="resume-role">Freelance Video Editor & Content Creator</div>
+          <div class="resume-org">Remote</div>
+          <div class="resume-desc">Producing and editing engaging short-form and long-form video content for YouTube,
+            TikTok, and Instagram. Creating visually compelling edits using sound design and pacing techniques.</div>
+        </div>
+        <div class="resume-item reveal" style="transition-delay:0.2s">
+          <div class="resume-date">Project-Based</div>
+          <div class="resume-role">Videography & Media Production</div>
+          <div class="resume-org">Various Clients</div>
+          <div class="resume-desc">Assisted in filming and producing promotional video content. Operated cameras,
+            lighting, and audio equipment. Edited raw footage into polished digital marketing content.</div>
+        </div>
+      </div>
+      <div class="resume-col">
+        <h3 class="reveal">Education</h3>
+        <div class="resume-item reveal" style="transition-delay:0.1s">
+          <div class="resume-date">In Progress</div>
+          <div class="resume-role">BSc Cybersecurity</div>
+          <div class="resume-org">Bingham University, Nigeria</div>
+          <div class="resume-desc">Faculty of Computing. Building a foundation in digital systems and cybersecurity
+            while pursuing creative digital media work.</div>
+        </div>
+        <h3 class="reveal" style="margin-top:2rem;">Skill Levels</h3>
+        <div class="skill-bar reveal" style="transition-delay:0.1s">
+          <div class="skill-bar-header"><span class="skill-bar-name">Video Editing</span><span
+              class="skill-bar-pct">92%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill" data-width="92"></div>
+          </div>
+        </div>
+        <div class="skill-bar reveal" style="transition-delay:0.2s">
+          <div class="skill-bar-header"><span class="skill-bar-name">Social Media Strategy</span><span
+              class="skill-bar-pct">85%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill" data-width="85"></div>
+          </div>
+        </div>
+        <div class="skill-bar reveal" style="transition-delay:0.3s">
+          <div class="skill-bar-header"><span class="skill-bar-name">Content Creation</span><span
+              class="skill-bar-pct">88%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill" data-width="88"></div>
+          </div>
+        </div>
+        <div class="skill-bar reveal" style="transition-delay:0.4s">
+          <div class="skill-bar-header"><span class="skill-bar-name">Post Production</span><span
+              class="skill-bar-pct">80%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill" data-width="80"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="skills-section">
+      <h3 class="reveal">Tools & Technologies</h3>
+      <div class="skills-grid reveal" style="transition-delay:0.1s">
+        <span class="skill-tag">Adobe Premiere Pro</span>
+        <span class="skill-tag">Adobe After Effects</span>
+        <span class="skill-tag">DaVinci Resolve</span>
+        <span class="skill-tag">CapCut</span>
+        <span class="skill-tag">Canva</span>
+        <span class="skill-tag">YouTube Studio</span>
+        <span class="skill-tag">TikTok</span>
+        <span class="skill-tag">Instagram</span>
+        <span class="skill-tag">LinkedIn</span>
+        <span class="skill-tag">Microsoft Office</span>
+        <span class="skill-tag">Sound Design</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SECTION: PORTFOLIO
+  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  HOW TO ADD YOUR VIDEOS:
+    Each card has a  data-video="..."  attribute.
+    Replace the value with ONE of:
+      A) Local file  â†’  "assets/videos/campaign.mp4"
+      B) Direct MP4 URL  â†’  "https://your-cdn.com/clip.mp4"
+      C) Google Drive direct link (see note below)
+
+    Each card also has  data-link="..."  â€” set this to the
+    YouTube / Drive URL you want the "Watch" button to open.
+
+  GOOGLE DRIVE VIDEO DIRECT LINK FORMAT:
+    Original share link:
+      https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+    Convert to direct embed/download link:
+      https://drive.google.com/uc?export=download&id=FILE_ID
+
+  GOOGLE_DRIVE_LINK â€” replace the href below with your Drive link
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section id="portfolio">
+    <div class="portfolio-header">
+      <div>
+        <p class="section-label reveal">My Work</p>
+        <h2 class="section-title reveal" style="transition-delay:0.1s">PORTFOLIO</h2>
+        <!-- â†“â†“â†“  GOOGLE_DRIVE_LINK â€” paste your Google Drive portfolio folder URL below â†“â†“â†“ -->
+        <a href="https://drive.google.com/drive/folders/1ldqkWKT433tNYj241jeC2OhFiCwa7ZhI?usp=drive_link"
+          target="_blank" rel="noopener" class="portfolio-drive-btn reveal" style="transition-delay:0.2s">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.28 3L1 12.36l3.5 6.07L9.78 9.07 6.28 3zm5.5 9.57L8.24 18.43h9.99l2.77-4.79-3.5-6.07-5.72 4.99zM14.22 3H9.78L6.28 9.07h7l3.5-6.07H14.22z" />
+          </svg>
+          View Full Portfolio on Drive
+        </a>
+        <!-- â†‘â†‘â†‘  GOOGLE_DRIVE_LINK end â†‘â†‘â†‘ -->
+      </div>
+      <div class="portfolio-filters reveal">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Video</button>
+        <button class="filter-btn">Social</button>
+      </div>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+      CARD 01 â€” Social Media Video Campaigns
+      VIDEO_SRC_01: replace data-video value with your clip
+      data-link: URL the "Watch" button opens (YouTube/Drive)
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <div class="portfolio-card reveal tilt-card" style="transition-delay:0.1s" data-video="assets/videos/vlogvideo.mp4"
+        data-link="assets/videos/vlogvideo.mp4">
+        <div class="card-bg"></div>
+        <div class="card-pattern">
+          <div class="card-icon-large">ðŸŽ¬</div>
+        </div>
+        <video class="card-video" muted loop playsinline preload="none"></video>
+        <div class="card-mute" title="Unmute">
+          <svg viewBox="0 0 24 24">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        </div>
+        <div class="card-play-idle"><svg viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg></div>
+        <div class="card-num">01</div>
+        <div class="card-overlay">
+          <div class="card-category">Video Campaign</div>
+          <div class="card-title">Social Media Video Campaigns</div>
+          <div class="card-actions">
+            <a href="#" class="card-btn card-btn-primary">â–¶ Watch</a>
+            <a href="#" class="card-btn card-btn-ghost">Details â†’</a>
+          </div>
+        </div>
+        <div class="card-progress"></div>
+      </div>
+
+      <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+      CARD 02 â€” Short-Form Reels & TikToks
+      VIDEO_SRC_02: replace data-video value with your clip
+      data-link: URL the "Watch" button opens (TikTok/YouTube)
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <div class="portfolio-card reveal tilt-card" style="transition-delay:0.15s" data-video="assets/videos/wisdomshort.mp4"
+        data-link="assets/videos/wisdomshort.mp4">
+        <div class="card-bg"></div>
+        <div class="card-pattern">
+          <div class="card-icon-large">âœ‚ï¸</div>
+        </div>
+        <video class="card-video" muted loop playsinline preload="none"></video>
+        <div class="card-mute" title="Unmute">
+          <svg viewBox="0 0 24 24">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        </div>
+        <div class="card-play-idle"><svg viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg></div>
+        <div class="card-num">02</div>
+        <div class="card-overlay">
+          <div class="card-category">Post Production</div>
+          <div class="card-title">Short-Form Reels & TikToks</div>
+          <div class="card-actions">
+            <a href="#" class="card-btn card-btn-primary">â–¶ Watch</a>
+            <a href="#" class="card-btn card-btn-ghost">Details â†’</a>
+          </div>
+        </div>
+        <div class="card-progress"></div>
+      </div>
+
+      <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+      CARD 03 â€” Brand & Marketing Videos
+      VIDEO_SRC_03: replace data-video value with your clip
+      data-link: URL the "Watch" button opens
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <div class="portfolio-card reveal tilt-card" style="transition-delay:0.2s" data-video="assets/videos/clothingbrands.mp4"
+        data-link="assets/videos/clothingbrands.mp4">
+        <div class="card-bg"></div>
+        <div class="card-pattern">
+          <div class="card-icon-large">ðŸ“¢</div>
+        </div>
+        <video class="card-video" muted loop playsinline preload="none"></video>
+        <div class="card-mute" title="Unmute">
+          <svg viewBox="0 0 24 24">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        </div>
+        <div class="card-play-idle"><svg viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg></div>
+        <div class="card-num">03</div>
+        <div class="card-overlay">
+          <div class="card-category">Brand Content</div>
+          <div class="card-title">Brand & Marketing Videos</div>
+          <div class="card-actions">
+            <a href="#" class="card-btn card-btn-primary">â–¶ Watch</a>
+            <a href="#" class="card-btn card-btn-ghost">Details â†’</a>
+          </div>
+        </div>
+        <div class="card-progress"></div>
+      </div>
+
+      <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+      CARD 04 â€” Music Video Edits
+      VIDEO_SRC_04: replace data-video value with your clip
+      data-link: URL the "Watch" button opens
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <div class="portfolio-card reveal tilt-card" style="transition-delay:0.25s" data-video="assets/videos/vid2.mp4"
+        data-link="assets/videos/shortsedit.mp4">
+        <div class="card-bg"></div>
+        <div class="card-pattern">
+          <div class="card-icon-large">ðŸŽµ</div>
+        </div>
+        <video class="card-video" muted loop playsinline preload="none"></video>
+        <div class="card-mute" title="Unmute">
+          <svg viewBox="0 0 24 24">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        </div>
+        <div class="card-play-idle"><svg viewBox="0 0 24 24">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg></div>
+        <div class="card-num">04</div>
+        <div class="card-overlay">
+          <div class="card-category">Sound & Edit</div>
+          <div class="card-title">Music Video Edits</div>
+          <div class="card-actions">
+            <a href="#" class="card-btn card-btn-primary">â–¶ Watch</a>
+            <a href="#" class="card-btn card-btn-ghost">Details â†’</a>
+          </div>
+        </div>
+        <div class="card-progress"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  SECTION: CONTACT
+  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  The form POSTs to the backend API at /api/contact.
+  BACKEND_URL below should match your deployed server URL.
+  During local dev it points to http://localhost:5000
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section id="contact">
+    <div class="contact-left">
+      <p class="section-label reveal">Let's Talk</p>
+      <h2 class="section-title reveal" style="transition-delay:0.1s">GET IN<br>TOUCH</h2>
+      <p class="contact-tagline reveal" style="transition-delay:0.2s">
+        Open to collaborations, freelance projects, and full-time opportunities.
+      </p>
+      <div class="contact-details reveal" style="transition-delay:0.3s">
+        <div class="contact-item">
+          <span class="contact-item-label">Email</span>
+          <a href="mailto:seyij556@gmail.com" class="contact-item-value">seyij556@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Phone</span>
+          <a href="tel:+2348061685817" class="contact-item-value">+234 08061685817</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Location</span>
+          <span class="contact-item-value">Abuja, Nigeria</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-right">
+      <p class="section-label reveal" style="transition-delay:0.1s">Send A Message</p>
+      <h2 class="section-title reveal" style="font-size:2.5rem;transition-delay:0.2s">WORK WITH<br>ME</h2>
+
+      <form id="contact-form" novalidate>
+        <div class="form-group reveal" style="transition-delay:0.3s">
+          <input type="text" class="form-input" id="input-name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group reveal" style="transition-delay:0.35s">
+          <input type="email" class="form-input" id="input-email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group reveal" style="transition-delay:0.4s">
+          <input type="text" class="form-input" id="input-subject" name="subject" placeholder="Subject" required>
+        </div>
+        <div class="form-group reveal" style="transition-delay:0.45s">
+          <textarea class="form-input" id="input-message" name="message" placeholder="Your Message" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-dark reveal" id="submit-btn" style="transition-delay:0.5s">
+          <span id="btn-text">Send Message</span>
+          <span id="btn-spinner" style="display:none">Sendingâ€¦</span>
+        </button>
+
+        <!-- Status message shown after form submission -->
+        <div id="form-status" role="alert"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">Â© 2025 Oluwaseyi Aaron Joseph. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#resume">Resume</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  JAVASCRIPT
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <script>
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  BACKEND_URL
+    //  â–¶  Local dev  : "http://localhost:5000"
+    //  â–¶  Production : Replace with your hosted URL, e.g.
+    //                  "https://oaj-portfolio-api.onrender.com"
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+    const PROD_BACKEND_URL = "https://YOUR-BACKEND-URL";
+    const BACKEND_URL = window.BACKEND_URL
+      || ((window.location.protocol === "file:" || isLocalHost) ? "http://localhost:5000" : PROD_BACKEND_URL);
+
+    // â”€â”€â”€ CUSTOM CURSOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX - 6 + 'px';
+      cursor.style.top = mouseY - 6 + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX - 20) * 0.12;
+      ringY += (mouseY - ringY - 20) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a,button,.portfolio-card,.service-item').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2.5)'; ring.style.transform = 'scale(1.5)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+    });
+
+    // â”€â”€â”€ SCROLL REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // â”€â”€â”€ COUNTER ANIMATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function animateCounter(el, target) {
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current) + (target === 100 ? '%' : '+');
+        if (current >= target) clearInterval(timer);
+      }, 20);
+    }
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target, parseInt(e.target.dataset.count));
+          statObserver.unobserve(e.target);
+        }
+      });
+    });
+    document.querySelectorAll('.stat-num[data-count]').forEach(el => statObserver.observe(el));
+
+    // â”€â”€â”€ SKILL BARS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.width = e.target.dataset.width + '%';
+          barObserver.unobserve(e.target);
+        }
+      });
+    });
+    document.querySelectorAll('.skill-bar-fill').forEach(el => barObserver.observe(el));
+
+    // â”€â”€â”€ 3D HERO PARALLAX â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.getElementById('home').addEventListener('mousemove', e => {
+      const rect = document.getElementById('home').getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      document.querySelectorAll('.float-shape').forEach((s, i) => {
+        const d = (i + 1) * 15;
+        s.style.transform = `translate(${x * d}px,${y * d}px) rotate(${x * 10}deg)`;
+      });
+      const photo = document.querySelector('.hero-photo');
+      if (photo) photo.style.transform = `translate(${x * 8}px,${y * 8}px)`;
+    });
+
+    // â”€â”€â”€ TILT CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(10px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+      });
+    });
+
+    // â”€â”€â”€ PORTFOLIO FILTERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // â”€â”€â”€ VIDEO HOVER ON PORTFOLIO CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.querySelectorAll('.portfolio-card[data-video]').forEach(card => {
+      const video = card.querySelector('.card-video');
+      const progress = card.querySelector('.card-progress');
+      const muteBtn = card.querySelector('.card-mute');
+      const watchBtn = card.querySelector('.card-btn-primary');
+      const src = card.dataset.video;
+      const link = card.dataset.link;
+      let loaded = false;
+      let timer = null;
+
+      card.addEventListener('mouseenter', () => {
+        if (!loaded) { video.src = src; video.load(); loaded = true; }
+        video.play().catch(() => { });
+        timer = setInterval(() => {
+          if (video.duration) progress.style.width = (video.currentTime / video.duration * 100) + '%';
+        }, 100);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+        clearInterval(timer);
+        setTimeout(() => { progress.style.transition = 'width 0.6s ease'; progress.style.width = '0%'; }, 300);
+      });
+
+      muteBtn && muteBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        const svg = muteBtn.querySelector('svg');
+        svg.innerHTML = video.muted
+          ? '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'
+          : '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>';
+      });
+
+      if (watchBtn && link) { watchBtn.href = link; watchBtn.target = '_blank'; }
+
+      card.addEventListener('click', e => {
+        if (!e.target.closest('.card-mute') && !e.target.closest('.card-btn')) {
+          if (link && link !== '#') window.open(link, '_blank');
+        }
+      });
+    });
+
+    // â”€â”€â”€ SMOOTH NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // â”€â”€â”€ SCROLL PARALLAX ON HERO PHOTO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    window.addEventListener('scroll', () => {
+      const photo = document.querySelector('.hero-photo');
+      if (photo) photo.style.transform = `translateY(${window.pageYOffset * 0.15}px)`;
+    });
+
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  CONTACT FORM â†’ BACKEND API
+    //  Posts to BACKEND_URL/api/contact  (defined at top of this script)
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const formStatus = document.getElementById('form-status');
+
+    function showStatus(msg, type) {
+      formStatus.textContent = msg;
+      formStatus.className = type;
+      formStatus.style.display = 'block';
+      if (type === 'success') {
+        setTimeout(() => { formStatus.style.display = 'none'; }, 6000);
+      }
+    }
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('input-name').value.trim();
+      const email = document.getElementById('input-email').value.trim();
+      const subject = document.getElementById('input-subject').value.trim();
+      const message = document.getElementById('input-message').value.trim();
+
+      if (!name || !email || !subject || !message) {
+        return showStatus('Please fill in all fields.', 'error');
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'inline';
+      showStatus('Sending your messageâ€¦', 'loading');
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/contact`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message }),
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        const data = contentType.includes('application/json')
+          ? await res.json()
+          : { success: false, message: 'Server returned an invalid response. Check backend URL and server status.' };
+
+        if (res.ok && data.success) {
+          showStatus('âœ“ Message sent! I\'ll get back to you soon.', 'success');
+          contactForm.reset();
+        } else {
+          showStatus(data.message || 'Something went wrong. Please try again.', 'error');
+        }
+      } catch (err) {
+        showStatus('Could not connect to server. Please email seyij556@gmail.com directly.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnSpinner.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>
+
+

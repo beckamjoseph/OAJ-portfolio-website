@@ -1,0 +1,2 @@
+portfolio-project/frontend/assets/videos/*.mp4 filter=lfs diff=lfs merge=lfs -text
+portfolio-project/frontend/assets/videos/*.mov filter=lfs diff=lfs merge=lfs -text
