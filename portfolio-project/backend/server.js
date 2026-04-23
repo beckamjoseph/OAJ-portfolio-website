@@ -37,24 +37,17 @@ const allowedOrigins = new Set([...configuredOrigins, ...defaultDevOrigins]);
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
 
 // CORS: allow configured frontend URL(s) + common local dev origins.
-const corsOptions = {
-  origin(origin, callback) {
-    // No origin = tools like curl/Postman/server-to-server.
-    // "null" can happen when opening the frontend directly from file://
-    if (!origin || origin === "null") return callback(null, true);
-    const isLocalDevOrigin =
-      /^http:\/\/localhost:\d+$/i.test(origin) ||
-      /^http:\/\/127\.0\.0\.1:\d+$/i.test(origin);
-    if (isLocalDevOrigin) return callback(null, true);
-    if (configuredOrigins.length === 0) return callback(null, true);
-    if (allowedOrigins.has(origin)) return callback(null, true);
-    return callback(new Error(`CORS blocked for origin: ${origin}`));
-  },
+// ✅ SIMPLE & RELIABLE CORS CONFIG
+// ✅ WORKING CORS CONFIG (use this)
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://oaj-portfolio.netlify.app" // ✅ your real frontend
+  ],
   methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-};
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
